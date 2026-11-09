@@ -1,0 +1,364 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program Menghitung Total Belanja</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e3f0ff, #f8fbff);
+            min-height: 100vh;
+            padding: 30px 15px;
+            color: #20375c;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .icon {
+            font-size: 45px;
+            margin-bottom: 10px;
+        }
+
+        header h1 {
+            color: #17447e;
+            font-size: 27px;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            color: #71839d;
+            font-size: 14px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 18px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 25px rgba(40, 90, 150, 0.09);
+        }
+
+        .card h2 {
+            font-size: 18px;
+            color: #245b9e;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #536985;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d8e4f2;
+            border-radius: 10px;
+            outline: none;
+            font-size: 14px;
+            background: #f9fbff;
+        }
+
+        input:focus {
+            border-color: #4388d8;
+            box-shadow: 0 0 0 3px #4388d81c;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 13px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .calculate {
+            flex: 1;
+            background: #2869b5;
+            color: white;
+        }
+
+        .reset {
+            background: #e8f0fa;
+            color: #315d91;
+        }
+
+        button:hover {
+            opacity: 0.85;
+        }
+
+        .result {
+            display: none;
+            background: white;
+            padding: 25px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(40, 90, 150, 0.09);
+        }
+
+        .result h2 {
+            color: #245b9e;
+            margin-bottom: 18px;
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px dashed #dce6f2;
+            font-size: 14px;
+        }
+
+        .total {
+            margin-top: 20px;
+            padding: 18px;
+            border-radius: 12px;
+            background: #eaf3ff;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            align-items: center;
+            font-weight: bold;
+            color: #17447e;
+        }
+
+        .total strong {
+            font-size: 20px;
+        }
+
+        .message {
+            color: #d34444;
+            font-size: 13px;
+            margin-top: 12px;
+        }
+
+        footer {
+            text-align: center;
+            color: #8a9bb0;
+            font-size: 12px;
+            margin-top: 25px;
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 23px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <header>
+        <div class="icon">🛒</div>
+        <h1>Program Menghitung Total Belanja</h1>
+        <p>Hitung total belanja dengan mudah dan praktis.</p>
+    </header>
+
+    <div class="card">
+        <h2>🛍️ Input Barang Pertama</h2>
+
+        <div class="form-group">
+            <label>Nama Barang 1</label>
+            <input type="text" id="nama1" placeholder="Masukkan nama barang">
+        </div>
+
+        <div class="form-group">
+            <label>Harga Barang 1 (Rp)</label>
+            <input type="number" id="harga1" min="0" placeholder="Masukkan harga">
+        </div>
+
+        <div class="form-group">
+            <label>Jumlah Barang 1</label>
+            <input type="number" id="jumlah1" min="1" placeholder="Masukkan jumlah">
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>🛍️ Input Barang Kedua</h2>
+
+        <div class="form-group">
+            <label>Nama Barang 2</label>
+            <input type="text" id="nama2" placeholder="Masukkan nama barang">
+        </div>
+
+        <div class="form-group">
+            <label>Harga Barang 2 (Rp)</label>
+            <input type="number" id="harga2" min="0" placeholder="Masukkan harga">
+        </div>
+
+        <div class="form-group">
+            <label>Jumlah Barang 2</label>
+            <input type="number" id="jumlah2" min="1" placeholder="Masukkan jumlah">
+        </div>
+
+        <div class="buttons">
+            <button class="calculate" onclick="hitungTotal()">
+                Hitung Total Belanja
+            </button>
+
+            <button class="reset" onclick="resetForm()">
+                Reset
+            </button>
+        </div>
+
+        <p class="message" id="pesan"></p>
+    </div>
+
+    <div class="result" id="hasil">
+        <h2>📋 Hasil Perhitungan</h2>
+
+        <div class="result-row">
+            <span id="hasilNama1"></span>
+            <strong id="subtotal1"></strong>
+        </div>
+
+        <div class="result-row">
+            <span id="hasilNama2"></span>
+            <strong id="subtotal2"></strong>
+        </div>
+
+        <div class="total">
+            <span>Total Belanja</span>
+            <strong id="total"></strong>
+        </div>
+    </div>
+
+    <footer>
+        Program Menghitung Total Belanja
+        <br>
+        Dibuat dengan HTML, CSS, dan JavaScript
+    </footer>
+
+</div>
+
+<script>
+    function rupiah(angka) {
+        return new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            maximumFractionDigits: 0
+        }).format(angka);
+    }
+
+    function hitungTotal() {
+
+        let nama1 = document.getElementById("nama1").value.trim();
+        let harga1 = document.getElementById("harga1").value;
+        let jumlah1 = document.getElementById("jumlah1").value;
+
+        let nama2 = document.getElementById("nama2").value.trim();
+        let harga2 = document.getElementById("harga2").value;
+        let jumlah2 = document.getElementById("jumlah2").value;
+
+        let pesan = document.getElementById("pesan");
+        let hasil = document.getElementById("hasil");
+
+        pesan.innerHTML = "";
+        hasil.style.display = "none";
+
+        if (
+            nama1 === "" || harga1 === "" || jumlah1 === "" ||
+            nama2 === "" || harga2 === "" || jumlah2 === ""
+        ) {
+            pesan.innerHTML = "Mohon lengkapi semua data barang!";
+            return;
+        }
+
+        harga1 = Number(harga1);
+        jumlah1 = Number(jumlah1);
+        harga2 = Number(harga2);
+        jumlah2 = Number(jumlah2);
+
+        if (
+            harga1 < 0 || harga2 < 0 ||
+            !Number.isInteger(jumlah1) ||
+            !Number.isInteger(jumlah2) ||
+            jumlah1 < 1 || jumlah2 < 1
+        ) {
+            pesan.innerHTML = "Masukkan harga yang valid dan jumlah minimal 1!";
+            return;
+        }
+
+        let subtotal1 = harga1 * jumlah1;
+        let subtotal2 = harga2 * jumlah2;
+
+        let total = subtotal1 + subtotal2;
+
+        document.getElementById("hasilNama1").innerHTML =
+            nama1 + " (" + jumlah1 + " x " + rupiah(harga1) + ")";
+
+        document.getElementById("hasilNama2").innerHTML =
+            nama2 + " (" + jumlah2 + " x " + rupiah(harga2) + ")";
+
+        document.getElementById("subtotal1").innerHTML =
+            rupiah(subtotal1);
+
+        document.getElementById("subtotal2").innerHTML =
+            rupiah(subtotal2);
+
+        document.getElementById("total").innerHTML =
+            rupiah(total);
+
+        hasil.style.display = "block";
+    }
+
+    function resetForm() {
+
+        document.getElementById("nama1").value = "";
+        document.getElementById("harga1").value = "";
+        document.getElementById("jumlah1").value = "";
+
+        document.getElementById("nama2").value = "";
+        document.getElementById("harga2").value = "";
+        document.getElementById("jumlah2").value = "";
+
+        document.getElementById("pesan").innerHTML = "";
+        document.getElementById("hasil").style.display = "none";
+    }
+</script>
+
+</body>
+  </html>
+  
